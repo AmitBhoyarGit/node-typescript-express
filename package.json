@@ -13,8 +13,10 @@
   "author": "Amit Bhoyar",
   "license": "MIT",
   "dependencies": {
+    "@types/request": "^2.48.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "request": "^2.88.0",
     "typescript": "^3.3.3",
     "yarn": "^1.13.0"
   },
