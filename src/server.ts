@@ -1,6 +1,6 @@
 import {App} from './app'
 class Server {
-    private PORT = 8080;
+    private PORT = process.env.PORT || 7777;
     constructor(){
         console.log("Initializing server...");
         this.start();
