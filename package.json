@@ -4,12 +4,13 @@
   "description": "code practice for nodejs api with express and typescript",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && npm run serve",
+    "start": "npm run serve",
     "build": "npm run build-ts",
     "serve": "node dist/server.js",
     "build-ts": "tsc",
     "test": "npm test",
-    "dev" : "npm run build && npm run serve"
+    "dev" : "npm run build && npm run serve",
+    "postinstall": "npm run build-ts"
   },
   "author": "Amit Bhoyar",
   "license": "MIT",
@@ -25,5 +26,8 @@
     "@types/body-parser": "^1.17.0",
     "@types/express": "^4.16.1",
     "@types/node": "^11.9.4"
+  },
+  "engines": {
+    "node": "8.11.4"
   }
 }
