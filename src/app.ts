@@ -5,6 +5,7 @@ export class App {
     public app : express.Application;
     constructor(){
         this.app = express();
+        this.configApp();
         this.setRouters();
     }
 
