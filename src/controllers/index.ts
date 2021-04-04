@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as request from "request";
-import Feed from "../models/Feed"
+import Feed from "../models/Feed";
 
 export class MainController {
   constructor() {}
@@ -23,8 +23,6 @@ export class MainController {
   }
 
   public async createFeed(req: Request, res: Response) {
-    console.log(req.body);
-
     const { title, message, selectedFile, creator, tags } = req.body;
     const newFeed = new Feed({
       title: title,
@@ -39,6 +37,63 @@ export class MainController {
       res.status(201).json(newFeed);
     } catch (error) {
       res.status(409).json({ message: error.message });
+    }
+  }
+
+  public async getFeed(req: Request, res: Response) {
+    const { title } = req.query;
+    if (title) {
+      try {
+        await Feed.find({ title: title }, (err, docs) => {
+          if (err) {
+            res.status(409).json({ message: err.message });
+          } else {
+            res.json(docs);
+          }
+        });
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    } else {
+      res
+        .status(400)
+        .json({ message: "Please send title as query parameter." });
+    }
+  }
+
+  public async getAllFeeds(req: Request, res: Response) {
+    try {
+      await Feed.find( {}, (err, docs) => {
+        if (err) {
+          res.status(409).json({ message: err.message });
+        } else {
+          res.json(docs);
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+
+  }
+
+  public async deleteFeed(req:Request, res:Response){
+    const { title } = req.query;
+    if (title) {
+      try {
+        await Feed.deleteOne({ title: title }, null, (err) => {
+          if (err) {
+            res.status(500).json({ message: err.message });
+          } else {
+            res.status(200).json({message:`${title} deleted`});
+          }
+        });
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    } else {
+      res
+        .status(400)
+        .json({ message: "Please send title as query parameter." });
     }
   }
 }
